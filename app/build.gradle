@@ -1,0 +1,79 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "br.com.caiodev.newsapi"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //AndroidXCore
+    implementation "androidx.core:core:$androidXCore"
+
+    //AppCompat
+    implementation "androidx.appcompat:appcompat:$appCompat"
+
+    //Coil
+    implementation("io.coil-kt:coil:$koil")
+
+    //Constraint layout
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayout"
+
+    //Kotlin
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+
+    //Ktx
+    implementation "androidx.core:core-ktx:$ktxCore"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$arch"
+
+    //Lifecycle section
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$arch"
+    implementation "androidx.lifecycle:lifecycle-extensions:$arch"
+    implementation "androidx.lifecycle:lifecycle-runtime:$arch"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$arch"
+
+    //Logging section
+    implementation "com.squareup.okhttp3:logging-interceptor:$loggingInterceptor"
+    implementation "com.jakewharton.timber:timber:$timber"
+
+    //Material design
+    implementation "com.google.android.material:material:$materialDesign"
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit"
+
+    //Test section
+    androidTestImplementation "androidx.test:core:$testCore"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
+    androidTestImplementation "androidx.test.ext:junit:$junit"
+    androidTestImplementation "androidx.test:runner:$runner"
+}
