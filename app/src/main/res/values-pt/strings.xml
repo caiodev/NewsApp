@@ -7,6 +7,5 @@
     <string name="unknown_host_exception_and_socket_timeout_exception">Por favor, verifique sua conexão e tente novamente mais tarde</string>
     <string name="generic_exception_and_generic_error">Ocorreu um erro. Por favor, tente novamente mais tarde</string>
     <string name="api_query_limit_exceeded_error">A cota de buscas da API foi excedida. Por favor, tente novamente mais tarde</string>
-    <string name="empty_field_error">Campo vazio</string>
     <string name="no_connection_error">Não há conexão com a internet. Por favor, verifique e tente novamente</string>
 </resources>

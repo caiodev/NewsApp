@@ -13,14 +13,15 @@ import br.com.caiodev.newsapi.sections.utils.constants.Constants.serverSideError
 import br.com.caiodev.newsapi.sections.utils.constants.Constants.socketTimeoutException
 import br.com.caiodev.newsapi.sections.utils.constants.Constants.sslHandshakeException
 import br.com.caiodev.newsapi.sections.utils.constants.Constants.unknownHostException
-import githubprofilesearcher.caiodev.com.br.githubprofilesearcher.sections.utils.service.APICallResult
+import br.com.caiodev.newsapi.sections.utils.service.APICallResult
 import kotlinx.coroutines.launch
 
 class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
 
     internal val successMutableLiveData = MutableLiveData<Any>()
     internal val errorSingleLiveEvent = SingleLiveEvent<Int>()
-    internal var hasCallBeenMade = false
+    internal var hasACallBeenMade = false
+    internal var hasAnUnsuccessfulCallBeenMade = false
 
     fun getTrendingNews(source: String, apiKey: String) {
         viewModelScope.launch {

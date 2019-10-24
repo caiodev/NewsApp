@@ -9,7 +9,7 @@ import br.com.caiodev.newsapi.sections.utils.constants.Constants.socketTimeoutEx
 import br.com.caiodev.newsapi.sections.utils.constants.Constants.sslHandshakeException
 import br.com.caiodev.newsapi.sections.utils.constants.Constants.successWithoutBody
 import br.com.caiodev.newsapi.sections.utils.constants.Constants.unknownHostException
-import githubprofilesearcher.caiodev.com.br.githubprofilesearcher.sections.utils.service.APICallResult
+import br.com.caiodev.newsapi.sections.utils.service.APICallResult
 import retrofit2.Response
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException

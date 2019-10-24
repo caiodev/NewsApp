@@ -38,24 +38,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
         setupUI()
         handleViewModel()
 
-        when (NetworkChecking.checkIfInternetConnectionIsAvailable(applicationContext)) {
-
-            cellular -> {
-
-            }
-
-            wifi -> {
-
-            }
-
-            disconnected -> {
-
-            }
-        }
-
         NetworkChecking.internetConnectionAvailabilityObservable(applicationContext)
             .observe(this, Observer {
-
+                if (viewModel.hasAnUnsuccessfulCallBeenMade) {
+                    callApi {
+                        viewModel.getTrendingNews(
+                            "google-news-br",
+                            "91bbedfc5f41432e9dfa6cfc59e18f7b"
+                        )
+                    }
+                    newsProgressBar.visibility = VISIBLE
+                }
             })
     }
 
@@ -68,10 +61,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
 
     override fun handleViewModel() {
 
-        if (!viewModel.hasCallBeenMade) viewModel.getTrendingNews(
-            "google-news-br",
-            "INSERT YOUR API KEY: https://newsapi.org/"
-        )
+        if (!viewModel.hasACallBeenMade) callApi {
+            viewModel.getTrendingNews(
+                "google-news-br",
+                "INSERT YOUR API KEY: https://newsapi.org/"
+            )
+        }
 
         viewModel.successMutableLiveData.observe(this, Observer {
             newsAdapter.updateList(viewModel.castAttributeThroughViewModel(it))
@@ -81,6 +76,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
         viewModel.errorSingleLiveEvent.observeSingleEvent(this, Observer {
             showSnackBar(this, getString(it))
             if (newsProgressBar.visibility == VISIBLE) newsProgressBar.visibility = GONE
+            viewModel.hasAnUnsuccessfulCallBeenMade = true
         })
     }
 
@@ -92,9 +88,21 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
             )
             adapter?.notifyDataSetChanged()
             scheduleLayoutAnimation()
-            viewModel.hasCallBeenMade = true
+            viewModel.hasACallBeenMade = true
         }
 
         if (newsProgressBar.visibility == VISIBLE) newsProgressBar.visibility = GONE
+    }
+
+
+    private fun callApi(genericFunction: () -> Unit) {
+        when (NetworkChecking.checkIfInternetConnectionIsAvailable(applicationContext)) {
+            cellular, wifi -> genericFunction.invoke()
+            disconnected -> {
+                showSnackBar(this, getString(R.string.no_connection_error))
+                if (newsProgressBar.visibility == VISIBLE) newsProgressBar.visibility = GONE
+                viewModel.hasAnUnsuccessfulCallBeenMade = true
+            }
+        }
     }
 }
