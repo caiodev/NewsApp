@@ -9,12 +9,17 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import br.com.caiodev.newsapi.R
+import br.com.caiodev.newsapi.sections.newsHome.model.adapter.NewsAdapter
 import br.com.caiodev.newsapi.sections.newsHome.model.repository.NewsRepository
 import br.com.caiodev.newsapi.sections.newsHome.viewModel.NewsViewModel
 import br.com.caiodev.newsapi.sections.newsHome.viewModel.NewsViewModelFactory
 import br.com.caiodev.newsapi.sections.utils.base.ActivityFlow
+import br.com.caiodev.newsapi.sections.utils.constants.Constants.cellular
+import br.com.caiodev.newsapi.sections.utils.constants.Constants.disconnected
+import br.com.caiodev.newsapi.sections.utils.constants.Constants.wifi
 import br.com.caiodev.newsapi.sections.utils.extensions.castAttributeThroughViewModel
 import br.com.caiodev.newsapi.sections.utils.extensions.showSnackBar
+import br.com.caiodev.newsapi.sections.utils.network.NetworkChecking
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
@@ -32,6 +37,26 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
         super.onCreate(savedInstanceState)
         setupUI()
         handleViewModel()
+
+        when (NetworkChecking.checkIfInternetConnectionIsAvailable(applicationContext)) {
+
+            cellular -> {
+
+            }
+
+            wifi -> {
+
+            }
+
+            disconnected -> {
+
+            }
+        }
+
+        NetworkChecking.internetConnectionAvailabilityObservable(applicationContext)
+            .observe(this, Observer {
+
+            })
     }
 
     override fun setupUI() {
@@ -55,6 +80,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
 
         viewModel.errorSingleLiveEvent.observeSingleEvent(this, Observer {
             showSnackBar(this, getString(it))
+            if (newsProgressBar.visibility == VISIBLE) newsProgressBar.visibility = GONE
         })
     }
 

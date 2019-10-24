@@ -19,4 +19,16 @@ object Constants {
 
     //Generic
     const val genericError = 10
+
+    //Internet connection variants
+
+    //Connected
+    const val wifi = 0
+    const val cellular = 1
+
+    //Disconnected
+    const val disconnected = 2
+
+    //Generic
+    const val generic = 3
 }

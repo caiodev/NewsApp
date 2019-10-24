@@ -1,10 +1,11 @@
-package br.com.caiodev.newsapi.sections.newsHome.view
+package br.com.caiodev.newsapi.sections.newsHome.model.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.caiodev.newsapi.R
 import br.com.caiodev.newsapi.sections.newsHome.model.serializedModels.Article
+import br.com.caiodev.newsapi.sections.newsHome.view.NewsViewHolder
 
 class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

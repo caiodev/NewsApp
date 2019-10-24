@@ -6,6 +6,10 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import androidx.lifecycle.MutableLiveData
+import br.com.caiodev.newsapi.sections.utils.constants.Constants.cellular
+import br.com.caiodev.newsapi.sections.utils.constants.Constants.disconnected
+import br.com.caiodev.newsapi.sections.utils.constants.Constants.generic
+import br.com.caiodev.newsapi.sections.utils.constants.Constants.wifi
 
 object NetworkChecking {
 
@@ -26,6 +30,28 @@ object NetworkChecking {
         override fun onLost(network: Network) {
             networkState.postValue(false)
         }
+    }
+
+    fun checkIfInternetConnectionIsAvailable(applicationContext: Context): Int {
+        (applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).apply {
+            allNetworks.let { networkArray ->
+                if (networkArray.isNotEmpty()) {
+                    networkArray.forEach { network ->
+                        getNetworkCapabilities(network)
+                            ?.let { networkCapabilities ->
+                                if (networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)) {
+                                    when {
+                                        networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> return wifi
+                                        networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> return cellular
+                                    }
+                                }
+                            }
+                    }
+                } else return disconnected
+            }
+        }
+
+        return generic
     }
 
     fun internetConnectionAvailabilityObservable(applicationContext: Context): MutableLiveData<Boolean> {
