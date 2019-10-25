@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import br.com.caiodev.newsapi.BuildConfig
 import br.com.caiodev.newsapi.R
 import br.com.caiodev.newsapi.sections.newsHome.model.adapter.NewsAdapter
 import br.com.caiodev.newsapi.sections.newsHome.model.repository.NewsRepository
@@ -42,10 +43,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
             .observe(this, Observer {
                 if (viewModel.hasAnUnsuccessfulCallBeenMade) {
                     callApi {
-                        viewModel.getTrendingNews(
-                            "google-news-br",
-                            "91bbedfc5f41432e9dfa6cfc59e18f7b"
-                        )
+                        viewModel.getTrendingNews("google-news-br", BuildConfig.API_KEY)
                     }
                     newsProgressBar.visibility = VISIBLE
                 }
@@ -62,10 +60,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
     override fun handleViewModel() {
 
         if (!viewModel.hasACallBeenMade) callApi {
-            viewModel.getTrendingNews(
-                "google-news-br",
-                "INSERT YOUR API KEY: https://newsapi.org/"
-            )
+            viewModel.getTrendingNews("google-news-br", BuildConfig.API_KEY)
         }
 
         viewModel.successMutableLiveData.observe(this, Observer {
