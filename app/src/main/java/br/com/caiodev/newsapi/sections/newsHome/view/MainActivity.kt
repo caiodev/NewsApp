@@ -21,6 +21,7 @@ import br.com.caiodev.newsapi.sections.utils.constants.Constants.wifi
 import br.com.caiodev.newsapi.sections.utils.extensions.castAttributeThroughViewModel
 import br.com.caiodev.newsapi.sections.utils.extensions.showSnackBar
 import br.com.caiodev.newsapi.sections.utils.network.NetworkChecking
+import com.onurkagan.ksnack_lib.MinimalKSnack.MinimalKSnack
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
@@ -33,6 +34,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
     }
 
     private val newsAdapter = NewsAdapter()
+
+    private val minimalSnack = MinimalKSnack(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,6 +84,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
             adapter?.notifyDataSetChanged()
             scheduleLayoutAnimation()
             viewModel.hasACallBeenMade = true
+            viewModel.hasAnUnsuccessfulCallBeenMade = false
         }
 
         if (newsProgressBar.visibility == VISIBLE) newsProgressBar.visibility = GONE
@@ -105,6 +109,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
                         viewModel.getTrendingNews("google-news-br", BuildConfig.ApiKey)
                     }
                     newsProgressBar.visibility = VISIBLE
+                } else {
+
                 }
             })
     }

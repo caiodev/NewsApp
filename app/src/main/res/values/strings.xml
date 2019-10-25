@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name" translatable="false">NewsAPI</string>
 
     <!-- Error messages -->
@@ -9,5 +10,4 @@
     <string name="unknown_host_exception_and_socket_timeout_exception">Please, check your internet connection and try again later</string>
     <string name="ssl_handshake_exception">The network you\'re connected to is unsafe. Please, change it and try again later</string>
     <string name="generic_exception_and_generic_error">An error occurred. Please, try again later</string>
-
 </resources>

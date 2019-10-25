@@ -62,6 +62,9 @@ dependencies {
     //Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 
+    //KSnack
+    implementation "com.github.onurkagan:KSnack:$kSnack"
+
     //Ktx
     implementation "androidx.core:core-ktx:$ktxCore"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$arch"

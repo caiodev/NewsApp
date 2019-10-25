@@ -16,7 +16,6 @@ object NetworkChecking {
     private val networkState = MutableLiveData<Boolean>()
 
     private val networkRequest = NetworkRequest.Builder().apply {
-        addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
         addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
         addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
     }
@@ -32,20 +31,20 @@ object NetworkChecking {
         }
     }
 
+    //Checks whether or not there is internet connection
     fun checkIfInternetConnectionIsAvailable(applicationContext: Context): Int {
         (applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).apply {
             allNetworks.let { networkArray ->
                 if (networkArray.isNotEmpty()) {
                     networkArray.forEach { network ->
-                        getNetworkCapabilities(network)
-                            ?.let { networkCapabilities ->
-                                if (networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)) {
-                                    when {
-                                        networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> return wifi
-                                        networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> return cellular
-                                    }
+                        getNetworkCapabilities(network)?.let { networkCapabilities ->
+                            if (networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)) {
+                                when {
+                                    networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> return wifi
+                                    networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> return cellular
                                 }
                             }
+                        }
                     }
                 } else return disconnected
             }
@@ -54,6 +53,7 @@ object NetworkChecking {
         return generic
     }
 
+    //Returns a LiveData so internet connection related state changes can be observed
     fun internetConnectionAvailabilityObservable(applicationContext: Context): MutableLiveData<Boolean> {
         (applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).apply {
             requestNetwork(
