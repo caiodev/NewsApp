@@ -54,7 +54,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
             viewModel.getTrendingNews(
                 "google-news-br",
                 BuildConfig.ApiKey
-            ) //Get an API Key at this site:
+            )//Get an API Key at this site: https://newsapi.org/ and secure your ApiKey following this article:
+            //https://medium.com/code-better/hiding-api-keys-from-your-android-repository-b23f5598b906
         }
 
         viewModel.successMutableLiveData.observe(this, Observer {
@@ -75,10 +76,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
 
     private fun runLayoutAnimation(recyclerView: RecyclerView) {
         recyclerView.apply {
-            layoutAnimation = AnimationUtils.loadLayoutAnimation(
-                context,
-                R.anim.layout_animation_fall_down
-            )
+            layoutAnimation =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)
             adapter?.notifyDataSetChanged()
             scheduleLayoutAnimation()
             viewModel.hasACallBeenMade = true
@@ -86,7 +85,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
 
         if (newsProgressBar.visibility == VISIBLE) newsProgressBar.visibility = GONE
     }
-
 
     private fun callApi(genericFunction: () -> Unit) {
         when (NetworkChecking.checkIfInternetConnectionIsAvailable(applicationContext)) {
