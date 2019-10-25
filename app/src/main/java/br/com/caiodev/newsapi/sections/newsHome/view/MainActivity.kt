@@ -38,16 +38,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
         super.onCreate(savedInstanceState)
         setupUI()
         handleViewModel()
-
-        NetworkChecking.internetConnectionAvailabilityObservable(applicationContext)
-            .observe(this, Observer {
-                if (viewModel.hasAnUnsuccessfulCallBeenMade) {
-                    callApi {
-                        viewModel.getTrendingNews("google-news-br", BuildConfig.API_KEY)
-                    }
-                    newsProgressBar.visibility = VISIBLE
-                }
-            })
+        setupExtras()
     }
 
     override fun setupUI() {
@@ -60,7 +51,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
     override fun handleViewModel() {
 
         if (!viewModel.hasACallBeenMade) callApi {
-            viewModel.getTrendingNews("google-news-br", BuildConfig.API_KEY)
+            viewModel.getTrendingNews(
+                "google-news-br",
+                BuildConfig.ApiKey
+            ) //Get an API Key at this site:
         }
 
         viewModel.successMutableLiveData.observe(this, Observer {
@@ -73,6 +67,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
             if (newsProgressBar.visibility == VISIBLE) newsProgressBar.visibility = GONE
             viewModel.hasAnUnsuccessfulCallBeenMade = true
         })
+    }
+
+    override fun setupExtras() {
+        setupInternetConnectionObserver()
     }
 
     private fun runLayoutAnimation(recyclerView: RecyclerView) {
@@ -99,5 +97,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
                 viewModel.hasAnUnsuccessfulCallBeenMade = true
             }
         }
+    }
+
+    private fun setupInternetConnectionObserver() {
+        NetworkChecking.internetConnectionAvailabilityObservable(applicationContext)
+            .observe(this, Observer {
+                if (viewModel.hasAnUnsuccessfulCallBeenMade) {
+                    callApi {
+                        viewModel.getTrendingNews("google-news-br", BuildConfig.ApiKey)
+                    }
+                    newsProgressBar.visibility = VISIBLE
+                }
+            })
     }
 }

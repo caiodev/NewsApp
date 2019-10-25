@@ -2,10 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-def apiKeyPropertiesFile = rootProject.file("apikey.properties")
-def apiKeyProperties = new Properties()
-apiKeyProperties.load(new FileInputStream(apiKeyPropertiesFile))
-
 android {
     compileSdkVersion 29
     defaultConfig {
@@ -14,13 +10,18 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-        buildConfigField("String", "API_KEY", apiKeyProperties['API_KEY'])
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+
+        debug {
+            buildConfigField 'String', "ApiKey", API_KEY
+            resValue 'String', "api_key", API_KEY
+        }
+
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -53,7 +54,7 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayout"
 
     //Kotlin
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 
     //Ktx
     implementation "androidx.core:core-ktx:$ktxCore"
