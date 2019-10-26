@@ -36,13 +36,13 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
                 is APICallResult.Error<*> -> {
                     when (value.error) {
                         unknownHostException, socketTimeoutException -> errorSingleLiveEvent.postValue(
-                            R.string.unknown_host_exception_and_socket_timeout_exception
+                            R.string.unknown_host_exception_and_socket_timeout_exception_message
                         )
-                        sslHandshakeException -> errorSingleLiveEvent.postValue(R.string.ssl_handshake_exception)
-                        clientSideError -> errorSingleLiveEvent.postValue(R.string.client_side_error)
-                        serverSideError -> errorSingleLiveEvent.postValue(R.string.server_side_error)
-                        forbidden -> errorSingleLiveEvent.postValue(R.string.api_query_limit_exceeded_error)
-                        else -> errorSingleLiveEvent.postValue(R.string.generic_exception_and_generic_error)
+                        sslHandshakeException -> errorSingleLiveEvent.postValue(R.string.ssl_handshake_exception_message)
+                        clientSideError -> errorSingleLiveEvent.postValue(R.string.client_side_error_message)
+                        serverSideError -> errorSingleLiveEvent.postValue(R.string.server_side_error_message)
+                        forbidden -> errorSingleLiveEvent.postValue(R.string.api_query_limit_exceeded_error_message)
+                        else -> errorSingleLiveEvent.postValue(R.string.generic_exception_and_generic_error_message)
                     }
                 }
             }

@@ -5,6 +5,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -18,10 +19,10 @@ import br.com.caiodev.newsapi.sections.utils.base.ActivityFlow
 import br.com.caiodev.newsapi.sections.utils.constants.Constants.cellular
 import br.com.caiodev.newsapi.sections.utils.constants.Constants.disconnected
 import br.com.caiodev.newsapi.sections.utils.constants.Constants.wifi
+import br.com.caiodev.newsapi.sections.utils.customViews.snackBar.CustomSnackBar
 import br.com.caiodev.newsapi.sections.utils.extensions.castAttributeThroughViewModel
 import br.com.caiodev.newsapi.sections.utils.extensions.showSnackBar
 import br.com.caiodev.newsapi.sections.utils.network.NetworkChecking
-import com.onurkagan.ksnack_lib.MinimalKSnack.MinimalKSnack
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
 
     private val newsAdapter = NewsAdapter()
 
-    private val minimalSnack = MinimalKSnack(this)
+    private var customSnackBar: CustomSnackBar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,10 +46,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
     }
 
     override fun setupUI() {
+
         newsRecyclerView.apply {
             setHasFixedSize(true)
             adapter = newsAdapter
         }
+
+        setupInternetConnectionStatusSnackBar()
     }
 
     override fun handleViewModel() {
@@ -94,7 +98,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
         when (NetworkChecking.checkIfInternetConnectionIsAvailable(applicationContext)) {
             cellular, wifi -> genericFunction.invoke()
             disconnected -> {
-                showSnackBar(this, getString(R.string.no_connection_error))
+                showInternetConnectionStatusSnackBar(false)
                 if (newsProgressBar.visibility == VISIBLE) newsProgressBar.visibility = GONE
                 viewModel.hasAnUnsuccessfulCallBeenMade = true
             }
@@ -104,14 +108,44 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
     private fun setupInternetConnectionObserver() {
         NetworkChecking.internetConnectionAvailabilityObservable(applicationContext)
             .observe(this, Observer {
-                if (viewModel.hasAnUnsuccessfulCallBeenMade) {
-                    callApi {
-                        viewModel.getTrendingNews("google-news-br", BuildConfig.ApiKey)
+                if (it == true) {
+                    if (viewModel.hasAnUnsuccessfulCallBeenMade) {
+                        callApi {
+                            viewModel.getTrendingNews("google-news-br", BuildConfig.ApiKey)
+                        }
+                        newsProgressBar.visibility = VISIBLE
                     }
-                    newsProgressBar.visibility = VISIBLE
-                } else {
+                    showInternetConnectionStatusSnackBar(true)
 
-                }
+                } else showInternetConnectionStatusSnackBar(false)
             })
+    }
+
+    private fun setupInternetConnectionStatusSnackBar() {
+        customSnackBar = CustomSnackBar.make(this.findViewById(android.R.id.content))
+    }
+
+    private fun showInternetConnectionStatusSnackBar(isInternetConnectionAvailable: Boolean) {
+        customSnackBar?.apply {
+            if (isInternetConnectionAvailable) {
+                setText("Back online").setBackgroundColor(
+                    ContextCompat.getColor(
+                        applicationContext,
+                        R.color.green_700
+                    )
+                )
+                dismiss()
+            } else {
+                customSnackBar?.apply {
+                    setText("You are offline").setBackgroundColor(
+                        ContextCompat.getColor(
+                            applicationContext,
+                            R.color.red_700
+                        )
+                    )
+                    show()
+                }
+            }
+        }
     }
 }

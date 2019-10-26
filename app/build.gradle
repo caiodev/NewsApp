@@ -13,10 +13,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    defaultConfig {
-        resValue 'String', "api_key", API_KEY
-    }
-
     buildTypes {
 
         debug {

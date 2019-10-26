@@ -1,13 +1,17 @@
 <resources>
 
-    <string name="app_name" translatable="false">NewsAPI</string>
+    <string name="app_name" translatable="false">NewsApp</string>
+
+    <!-- Success messages -->
+    <string name="back_online_success_message">Back online</string>
 
     <!-- Error messages -->
-    <string name="no_connection_error">Well&#8230;, there\'s no internet connection. Please, Check it and try again</string>
-    <string name="client_side_error">We couldn\'t get what you\'re looking for. Please, try again later</string>
-    <string name="server_side_error">Our servers are overloaded at the moment. Please, try again later</string>
-    <string name="api_query_limit_exceeded_error">The API query limit has been exceeded. Please, try again later</string>
-    <string name="unknown_host_exception_and_socket_timeout_exception">Please, check your internet connection and try again later</string>
-    <string name="ssl_handshake_exception">The network you\'re connected to is unsafe. Please, change it and try again later</string>
-    <string name="generic_exception_and_generic_error">An error occurred. Please, try again later</string>
+    <string name="offline_error_message">You are offline</string>
+    <string name="no_connection_error_message">Well&#8230;, there\'s no internet connection. Please, Check it and try again</string>
+    <string name="client_side_error_message">We couldn\'t get what you\'re looking for. Please, try again later</string>
+    <string name="server_side_error_message">Our servers are overloaded at the moment. Please, try again later</string>
+    <string name="api_query_limit_exceeded_error_message">The API query limit has been exceeded. Please, try again later</string>
+    <string name="unknown_host_exception_and_socket_timeout_exception_message">Please, check your internet connection and try again later</string>
+    <string name="ssl_handshake_exception_message">The network you\'re connected to is unsafe. Please, change it and try again later</string>
+    <string name="generic_exception_and_generic_error_message">An error occurred. Please, try again later</string>
 </resources>
