@@ -15,13 +15,10 @@ buildscript {
         gradleVersion = '3.5.1'
 
         //Koil
-        koil = '0.6.1'
+        koil = '0.8.0'
 
         //Kotlin
         kotlinVersion = '1.3.50'
-
-        //KSnack
-        kSnack = '1.1.0'
 
         //Ktx
         ktxCore = '1.2.0-beta01'
@@ -33,7 +30,7 @@ buildscript {
         materialDesign = '1.2.0-alpha01'
 
         //OkHttpLoggingInterceptor
-        loggingInterceptor = '4.1.0'
+        loggingInterceptor = '4.2.2'
 
         //Retrofit
         retrofit = '2.6.2'

@@ -9,7 +9,7 @@ import br.com.caiodev.newsapi.sections.newsHome.view.NewsViewHolder
 
 class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var newsList: MutableList<Article>? = null
+    private var newsList: List<Article>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -35,7 +35,7 @@ class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    fun updateList(list: MutableList<Article>) {
+    fun updateList(list: List<Article>) {
         newsList = list
     }
 

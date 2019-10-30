@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
     private fun showInternetConnectionStatusSnackBar(isInternetConnectionAvailable: Boolean) {
         customSnackBar?.apply {
             if (isInternetConnectionAvailable) {
-                setText("Back online").setBackgroundColor(
+                setText(getString(R.string.back_online_success_message)).setBackgroundColor(
                     ContextCompat.getColor(
                         applicationContext,
                         R.color.green_700
@@ -137,7 +137,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
                 dismiss()
             } else {
                 customSnackBar?.apply {
-                    setText("You are offline").setBackgroundColor(
+                    setText(getString(R.string.offline_error_message)).setBackgroundColor(
                         ContextCompat.getColor(
                             applicationContext,
                             R.color.red_700

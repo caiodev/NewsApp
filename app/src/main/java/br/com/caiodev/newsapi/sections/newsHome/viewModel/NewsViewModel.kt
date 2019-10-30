@@ -25,7 +25,6 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
 
     fun getTrendingNews(source: String, apiKey: String) {
         viewModelScope.launch {
-
             when (val value = newsRepository.getTrendingNews(source, apiKey)) {
                 is APICallResult.Success<*> -> {
                     with(value.data as News) {
