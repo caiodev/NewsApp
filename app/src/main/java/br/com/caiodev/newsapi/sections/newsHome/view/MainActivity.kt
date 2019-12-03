@@ -61,8 +61,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
             viewModel.getTrendingNews(
                 "google-news-br",
                 BuildConfig.ApiKey
-            )//Get an API Key at this site: https://newsapi.org/ and secure your ApiKey following this article:
-            //https://medium.com/code-better/hiding-api-keys-from-your-android-repository-b23f5598b906
+            )//Head over to https://newsapi.org/ to get an API Key and secure your ApiKey following this article:
+            //https://androidiqa.blogspot.com/2019/05/hiding-api-keys-from-your-android.html
         }
 
         viewModel.successMutableLiveData.observe(this, Observer {
