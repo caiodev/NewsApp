@@ -24,6 +24,8 @@ import br.com.caiodev.newsapi.sections.utils.extensions.castAttributeThroughView
 import br.com.caiodev.newsapi.sections.utils.extensions.showSnackBar
 import br.com.caiodev.newsapi.sections.utils.network.NetworkChecking
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
+import kotlin.concurrent.schedule
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
 
@@ -33,6 +35,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
             NewsViewModelFactory(NewsRepository())
         ).get(NewsViewModel::class.java)
     }
+
 
     private val newsAdapter = NewsAdapter()
 
@@ -134,6 +137,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
                         R.color.green_700
                     )
                 )
+
+                Timer().schedule(3000) {
+
+                }
+
                 dismiss()
             } else {
                 customSnackBar?.apply {
