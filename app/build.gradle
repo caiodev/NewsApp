@@ -62,6 +62,9 @@ dependencies {
     implementation "androidx.core:core-ktx:$ktxCore"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$arch"
 
+    //LeakCanary
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanary"
+
     //Lifecycle section
     implementation "androidx.lifecycle:lifecycle-viewmodel:$arch"
     implementation "androidx.lifecycle:lifecycle-extensions:$arch"

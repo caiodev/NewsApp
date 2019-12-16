@@ -47,12 +47,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
 
     override fun setupUI() {
 
+        customSnackBar = CustomSnackBar.make(this.findViewById(android.R.id.content))
+
         newsRecyclerView.apply {
             setHasFixedSize(true)
             adapter = newsAdapter
         }
-
-        setupInternetConnectionStatusSnackBar()
     }
 
     override fun handleViewModel() {
@@ -107,22 +107,21 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
 
     private fun setupInternetConnectionObserver() {
         NetworkChecking.internetConnectionAvailabilityObservable(applicationContext)
-            .observe(this, Observer {
-                if (it == true) {
-                    if (viewModel.hasAnUnsuccessfulCallBeenMade) {
-                        callApi {
-                            viewModel.getTrendingNews("google-news-br", BuildConfig.ApiKey)
+            .observe(this, Observer { isInternetAvailable ->
+                when (isInternetAvailable) {
+                    true -> {
+                        if (viewModel.hasAnUnsuccessfulCallBeenMade) {
+                            callApi {
+                                viewModel.getTrendingNews("google-news-br", BuildConfig.ApiKey)
+                            }
+                            newsProgressBar.visibility = VISIBLE
                         }
-                        newsProgressBar.visibility = VISIBLE
+                        showInternetConnectionStatusSnackBar(true)
                     }
-                    showInternetConnectionStatusSnackBar(true)
 
-                } else showInternetConnectionStatusSnackBar(false)
+                    false -> showInternetConnectionStatusSnackBar(false)
+                }
             })
-    }
-
-    private fun setupInternetConnectionStatusSnackBar() {
-        customSnackBar = CustomSnackBar.make(this.findViewById(android.R.id.content))
     }
 
     private fun showInternetConnectionStatusSnackBar(isInternetConnectionAvailable: Boolean) {
