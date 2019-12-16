@@ -26,11 +26,8 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
     fun getTrendingNews(source: String, apiKey: String) {
         viewModelScope.launch {
             when (val value = newsRepository.getTrendingNews(source, apiKey)) {
-                is APICallResult.Success<*> -> {
-                    with(value.data as News) {
-                        successMutableLiveData.postValue(articles)
-                    }
-                }
+                is APICallResult.Success<*> ->
+                    successMutableLiveData.postValue((value.data as News).articles)
 
                 is APICallResult.Error<*> -> {
                     when (value.error) {

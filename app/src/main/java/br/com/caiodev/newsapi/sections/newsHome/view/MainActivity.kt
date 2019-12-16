@@ -24,6 +24,8 @@ import br.com.caiodev.newsapi.sections.utils.extensions.castAttributeThroughView
 import br.com.caiodev.newsapi.sections.utils.extensions.showSnackBar
 import br.com.caiodev.newsapi.sections.utils.network.NetworkChecking
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
+import kotlin.concurrent.schedule
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
 
@@ -33,6 +35,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
             NewsViewModelFactory(NewsRepository())
         ).get(NewsViewModel::class.java)
     }
+
 
     private val newsAdapter = NewsAdapter()
 
@@ -61,8 +64,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
             viewModel.getTrendingNews(
                 "google-news-br",
                 BuildConfig.ApiKey
-            )//Get an API Key at this site: https://newsapi.org/ and secure your ApiKey following this article:
-            //https://medium.com/code-better/hiding-api-keys-from-your-android-repository-b23f5598b906
+            )//Head over to https://newsapi.org/ to get an API Key and secure your ApiKey following this article:
+            //https://androidiqa.blogspot.com/2019/05/hiding-api-keys-from-your-android.html
         }
 
         viewModel.successMutableLiveData.observe(this, Observer {
@@ -133,6 +136,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ActivityFlow {
                         R.color.green_700
                     )
                 )
+
+                Timer().schedule(3000) {
+
+                }
+
                 dismiss()
             } else {
                 customSnackBar?.apply {

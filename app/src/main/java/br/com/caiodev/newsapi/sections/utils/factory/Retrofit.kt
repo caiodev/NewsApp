@@ -1,18 +1,22 @@
 package br.com.caiodev.newsapi.sections.utils.factory
 
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-class RetrofitService {
+class Retrofit {
 
     @PublishedApi
     internal val baseUrl = "https://newsapi.org/v2/"
 
     private val timberTag = "OkHttp"
+
+    val contentType = "application/json".toMediaType()
 
     @PublishedApi
     internal var retrofitBuilder: Any? = null
@@ -43,7 +47,7 @@ class RetrofitService {
         Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(getOkHttpClient())
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(Json.asConverterFactory(contentType))
             .build().create(T::class.java) as T
 
     @PublishedApi
