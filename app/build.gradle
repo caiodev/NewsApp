@@ -49,6 +49,15 @@ android {
             useJUnitPlatform()
         }
     }
+
+    sourceSets {
+        androidTest {
+            java.srcDirs += "src/sharedTest/java"
+        }
+        test {
+            java.srcDirs += "src/sharedTest/java"
+        }
+    }
 }
 
 dependencies {
@@ -62,10 +71,18 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appCompat"
 
     //Coil
-    implementation("io.coil-kt:coil:$koil")
+    implementation("io.coil-kt:coil:$coil")
 
     //Constraint layout
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayout"
+
+    //Koin
+    //For Android
+    implementation "org.koin:koin-android:$koin"
+    //For Lifecycle scoping
+    implementation "org.koin:koin-androidx-scope:$koin"
+    //For Android Architecture ViewModel
+    implementation "org.koin:koin-androidx-viewmodel:$koin"
 
     //Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin"
@@ -97,13 +114,29 @@ dependencies {
     //Serialization
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization"
 
-    //Testing section
-    androidTestImplementation "androidx.test:core:$testCore"
+    //*Testing section*/
+
+    //*Test source set*/
+
+    //Test core
+    testImplementation "androidx.test:core-ktx:$testCore"
+
+    //ArchTestCore
+    testImplementation "androidx.arch.core:core-testing:$archTest"
+
+    //Jacoco
+    testImplementation "org.jacoco:org.jacoco.ant:$jacocoVersion"
+
+    //JUnit
+    testImplementation "org.junit.jupiter:junit-jupiter:$junit5"
+
+    /*AndroidTest source set*/
+    //Test core
+    androidTestImplementation "androidx.test:core-ktx:$testCore"
     androidTestImplementation "androidx.test:runner:$runner"
 
     //JUnit
     androidTestImplementation "androidx.test.ext:junit:$junitAndroidX"
-    testImplementation "org.junit.jupiter:junit-jupiter:$junit5"
 
     //Espresso
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"

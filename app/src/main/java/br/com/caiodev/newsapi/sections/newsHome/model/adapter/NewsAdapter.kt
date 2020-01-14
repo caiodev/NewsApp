@@ -9,7 +9,7 @@ import br.com.caiodev.newsapi.sections.newsHome.view.NewsViewHolder
 
 class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var newsList: List<Article>? = null
+    private lateinit var newsList: List<Article>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -22,16 +22,11 @@ class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         )
     }
 
-    override fun getItemCount(): Int {
-        return getListSize()
-    }
+    override fun getItemCount() = getListSize()
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         with(holder as NewsViewHolder) {
-
-            newsList?.let {
-                bind(it[position])
-            }
+            bind(newsList[position])
         }
     }
 
@@ -39,7 +34,5 @@ class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         newsList = list
     }
 
-    private fun getListSize(): Int {
-        return newsList?.size ?: 0
-    }
+    private fun getListSize() = newsList.size
 }

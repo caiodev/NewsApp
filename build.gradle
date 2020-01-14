@@ -12,8 +12,11 @@ buildscript {
         //Gradle
         gradleVersion = '3.5.3'
 
-        //Koil
-        koil = '0.8.0'
+        //Coil
+        coil = '0.9.1'
+
+        //Koin
+        koin = '2.1.0-alpha-3'
 
         //Kotlin
         kotlin = '1.3.61'
@@ -47,12 +50,13 @@ buildscript {
         timber = '4.7.1'
 
         //Test dependency versions
-        testCore = '1.2.1-alpha02'
+        archTest = '2.1.0'
         espresso = '3.3.0-alpha02'
         jacocoVersion = '0.8.5'
         junitAndroidX = '1.1.2-alpha02'
         junit5 = '5.5.2'
-        runner = '1.3.0-alpha02'
+        runner = '1.3.0-alpha03'
+        testCore = '1.2.1-alpha02'
     }
 
     dependencies {
@@ -102,6 +106,9 @@ allprojects {
                 includeGroup "org.jacoco"
                 includeGroup "org.junit.jupiter"
                 includeGroup "org.junit.platform"
+                includeGroup "org.koin"
+                includeGroup "org.mockito"
+                includeGroup "org.objenesis"
                 includeGroup "org.opentest4j"
                 includeGroup "org.ow2.asm"
                 includeGroup "org.sonatype.oss"

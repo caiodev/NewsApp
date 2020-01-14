@@ -9,19 +9,14 @@ import retrofit2.Retrofit
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-class Retrofit {
+object Retrofit {
 
     @PublishedApi
     internal val baseUrl = "https://newsapi.org/v2/"
 
-    private val timberTag = "OkHttp"
+    private const val timberTag = "OkHttp"
 
     val contentType = "application/json".toMediaType()
-
-    @PublishedApi
-    internal var retrofitBuilder: Any? = null
-
-    private var okHttpClient: OkHttpClient? = null
 
     private val httpLoggingInterceptor =
         HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
@@ -33,14 +28,7 @@ class Retrofit {
         }
 
     @PublishedApi
-    internal inline fun <reified T> getRetrofitService(): T {
-        retrofitBuilder?.let { retrofitService ->
-            return retrofitService as T
-        } ?: run {
-            retrofitBuilder = createRetrofitService<T>()
-            return retrofitBuilder as T
-        }
-    }
+    internal inline fun <reified T> getRetrofitService(): T = createRetrofitService()
 
     @PublishedApi
     internal inline fun <reified T> createRetrofitService() =
@@ -51,14 +39,7 @@ class Retrofit {
             .build().create(T::class.java) as T
 
     @PublishedApi
-    internal fun getOkHttpClient(): OkHttpClient {
-        okHttpClient?.let { client ->
-            return client
-        } ?: run {
-            okHttpClient = createOkHttpClient()
-            return okHttpClient as OkHttpClient
-        }
-    }
+    internal fun getOkHttpClient(): OkHttpClient = createOkHttpClient()
 
     private fun createOkHttpClient() =
         OkHttpClient.Builder()

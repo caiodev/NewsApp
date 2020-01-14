@@ -18,10 +18,10 @@ import kotlinx.coroutines.launch
 
 class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
 
-    internal val successMutableLiveData = MutableLiveData<Any>()
-    internal val errorSingleLiveEvent = SingleLiveEvent<Int>()
     internal var hasACallBeenMade = false
     internal var hasAnUnsuccessfulCallBeenMade = false
+    internal val successMutableLiveData = MutableLiveData<Any>()
+    internal val errorSingleLiveEvent = SingleLiveEvent<Int>()
 
     fun getTrendingNews(source: String, apiKey: String) {
         viewModelScope.launch {
